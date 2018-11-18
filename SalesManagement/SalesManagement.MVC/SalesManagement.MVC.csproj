@@ -177,6 +177,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
     <Content Include="Views\Clientes\Create.cshtml" />
+    <Content Include="Views\Clientes\Delete.cshtml" />
+    <Content Include="Views\Clientes\Details.cshtml" />
+    <Content Include="Views\Clientes\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -191,13 +194,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SalesManagement.Application\SalesManagement.Application.csproj">
+      <Project>{4bf3965e-a962-42ee-a349-c7f40f9f60b1}</Project>
+      <Name>SalesManagement.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SalesManagement.Domain\SalesManagement.Domain.csproj">
       <Project>{8f66d562-ab16-486b-8827-176ea1e4c758}</Project>
       <Name>SalesManagement.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SalesManagement.Infra.Data\SalesManagement.Infra.Data.csproj">
-      <Project>{291DA205-A951-4836-A09B-C868F22A98AC}</Project>
-      <Name>SalesManagement.Infra.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
