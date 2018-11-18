@@ -1,8 +1,8 @@
-﻿using SalesManagement.Domain.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using SalesManagement.Infra.Data.Context;
 using System.Linq;
+using SalesManagement.Domain.Interfaces.Repositories;
 
 namespace SalesManagement.Infra.Data.Repositories
 {

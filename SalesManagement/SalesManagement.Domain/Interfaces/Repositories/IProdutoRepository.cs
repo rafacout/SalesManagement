@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SalesManagement.Domain.Interfaces
+namespace SalesManagement.Domain.Interfaces.Repositories
 {
     public interface IProdutoRepository : IRepositoryBase<Produto>
     {
