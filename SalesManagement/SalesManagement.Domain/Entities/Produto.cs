@@ -8,7 +8,7 @@ namespace SalesManagement.Domain.Entities
 
         public string Descricao { get; set; }
 
-        public decimal Valor { get; set; }
+        public double Valor { get; set; }
 
         public bool Disponivel { get; set; }
 
