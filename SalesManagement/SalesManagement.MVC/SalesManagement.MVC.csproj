@@ -175,10 +175,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Clientes\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Clientes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -193,6 +194,10 @@
     <ProjectReference Include="..\SalesManagement.Domain\SalesManagement.Domain.csproj">
       <Project>{8f66d562-ab16-486b-8827-176ea1e4c758}</Project>
       <Name>SalesManagement.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SalesManagement.Infra.Data\SalesManagement.Infra.Data.csproj">
+      <Project>{291DA205-A951-4836-A09B-C868F22A98AC}</Project>
+      <Name>SalesManagement.Infra.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
