@@ -10,7 +10,7 @@ namespace SalesManagement.Infra.Data.EntityConfig
 {
     public class ClienteConfiguration : EntityTypeConfiguration<Cliente>
     {
-        //Utilização do Fluent API para modelar detalhes da entidade
+        //Utilização do Fluent API para modelar detalhes da entidade e definit chaves, relacionamentos, tamanho, etc
         public ClienteConfiguration()
         {
             HasKey(c => c.ClienteId);

@@ -51,6 +51,9 @@
   <ItemGroup>
     <Compile Include="Context\SalesManagementContext.cs" />
     <Compile Include="EntityConfig\ClienteConfiguration.cs" />
+    <Compile Include="EntityConfig\PedidoConfiguration.cs" />
+    <Compile Include="EntityConfig\ItemPedidoConfiguration.cs" />
+    <Compile Include="EntityConfig\ProdutoConfiguration.cs" />
     <Compile Include="Migrations\201811172314022_Initial.cs" />
     <Compile Include="Migrations\201811172314022_Initial.Designer.cs">
       <DependentUpon>201811172314022_Initial.cs</DependentUpon>
@@ -58,6 +61,14 @@
     <Compile Include="Migrations\201811181319500_AdjustmentsCliente.cs" />
     <Compile Include="Migrations\201811181319500_AdjustmentsCliente.Designer.cs">
       <DependentUpon>201811181319500_AdjustmentsCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811181448306_Pedidos.cs" />
+    <Compile Include="Migrations\201811181448306_Pedidos.Designer.cs">
+      <DependentUpon>201811181448306_Pedidos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811181504187_AdjustEstoque.cs" />
+    <Compile Include="Migrations\201811181504187_AdjustEstoque.Designer.cs">
+      <DependentUpon>201811181504187_AdjustEstoque.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +92,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811181319500_AdjustmentsCliente.resx">
       <DependentUpon>201811181319500_AdjustmentsCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181448306_Pedidos.resx">
+      <DependentUpon>201811181448306_Pedidos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181504187_AdjustEstoque.resx">
+      <DependentUpon>201811181504187_AdjustEstoque.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

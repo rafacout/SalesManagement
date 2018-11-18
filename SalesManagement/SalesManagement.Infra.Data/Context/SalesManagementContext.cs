@@ -16,6 +16,13 @@ namespace SalesManagement.Infra.Data.Context
 
         public DbSet<Cliente> Clientes { get; set; }
 
+        public DbSet<Produto> Produtos { get; set; }
+
+        public DbSet<Pedido> Pedidos { get; set; }
+
+        public DbSet<ItemPedido> ItemPedidos { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -37,6 +44,9 @@ namespace SalesManagement.Infra.Data.Context
 
 
             modelBuilder.Configurations.Add(new ClienteConfiguration());
+            modelBuilder.Configurations.Add(new ProdutoConfiguration());
+            modelBuilder.Configurations.Add(new PedidoConfiguration());
+            modelBuilder.Configurations.Add(new ItemPedidoConfiguration());
         }
 
         public override int SaveChanges()
