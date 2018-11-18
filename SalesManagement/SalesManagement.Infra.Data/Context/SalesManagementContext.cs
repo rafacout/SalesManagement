@@ -1,4 +1,5 @@
 ﻿using SalesManagement.Domain.Entities;
+using SalesManagement.Infra.Data.EntityConfig;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -33,6 +34,9 @@ namespace SalesManagement.Infra.Data.Context
             //Quando nao informar o tamanho do campo, o string será 100
             modelBuilder.Properties<string>()
                 .Configure(p => p.HasMaxLength(100));
+
+
+            modelBuilder.Configurations.Add(new ClienteConfiguration());
         }
 
         public override int SaveChanges()
