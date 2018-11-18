@@ -1,9 +1,9 @@
 ﻿using SalesManagement.Domain.Entities;
 using System.Collections.Generic;
 
-namespace SalesManagement.Domain.Interfaces.Services
+namespace SalesManagement.Application.Interfaces
 {
-    public interface IProdutoService : IServiceBase<Produto>
+    public interface IProdutoAppService : IAppServiceBase<Produto>
     {
         IEnumerable<Produto> BuscarPorNome(string nome);
     }

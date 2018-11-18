@@ -1,5 +1,4 @@
 ﻿using SalesManagement.Domain.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace SalesManagement.Domain.Interfaces.Repositories

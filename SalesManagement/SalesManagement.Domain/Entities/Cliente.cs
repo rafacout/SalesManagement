@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace SalesManagement.Domain.Entities
 {
     public class Cliente

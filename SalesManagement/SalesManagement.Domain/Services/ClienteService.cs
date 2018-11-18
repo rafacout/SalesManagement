@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SalesManagement.Domain.Entities;
 using SalesManagement.Domain.Interfaces.Repositories;
 using SalesManagement.Domain.Interfaces.Services;

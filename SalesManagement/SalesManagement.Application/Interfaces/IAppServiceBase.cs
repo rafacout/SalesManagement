@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace SalesManagement.Domain.Interfaces.Services
+namespace SalesManagement.Application.Interfaces
 {
-    public interface IServiceBase<T> where T : class
+    public interface IAppServiceBase<T> where T : class
     {
         void Add(T obj);
 
