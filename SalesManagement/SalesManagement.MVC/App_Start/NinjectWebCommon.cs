@@ -42,20 +42,24 @@ namespace SalesManagement.MVC
             RegisterServices(kernel);
             return kernel;
         }
+
         private static void RegisterServices(IKernel kernel)
         {
             //kernel.Bind<IRepo>().ToMethod(ctx => new Repo("Ninject Rocks!"));
             kernel.Bind(typeof(IAppServiceBase<>)).To(typeof(AppServiceBase<>));
             kernel.Bind<IClienteAppService>().To<ClienteAppService>();
             kernel.Bind<IProdutoAppService>().To<ProdutoAppService>();
+            kernel.Bind<IPedidoAppService>().To<PedidoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IClienteService>().To<ClienteService>();
             kernel.Bind<IProdutoService>().To<ProdutoService>();
+            kernel.Bind<IPedidoService>().To<PedidoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IClienteRepository>().To<ClienteRepository>();
             kernel.Bind<IProdutoRepository>().To<ProdutoRepository>();
+            kernel.Bind<IPedidoRepository>().To<PedidoRepository>();
         }
     }
 }
