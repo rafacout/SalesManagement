@@ -1,4 +1,7 @@
-﻿using SalesManagement.Application.Interfaces;
+﻿using AutoMapper;
+using SalesManagement.Application.Interfaces;
+using SalesManagement.Domain.Entities;
+using SalesManagement.MVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +12,15 @@ namespace SalesManagement.MVC.Controllers
 {
     public class PedidosController : Controller
     {
+        private readonly IProdutoAppService _produtoApp;
+        private readonly IClienteAppService _clienteApp;
         private readonly IPedidoAppService _pedidoApp;
 
-        public PedidosController(IPedidoAppService pedidoApp)
+        public PedidosController(IPedidoAppService pedidoApp, IClienteAppService clienteApp, IProdutoAppService produtoApp)
         {
             _pedidoApp = pedidoApp;
+            _clienteApp = clienteApp;
+            _produtoApp = produtoApp;
         }
 
         public ActionResult Index()
@@ -28,20 +35,33 @@ namespace SalesManagement.MVC.Controllers
 
         public ActionResult Create()
         {
+            var clientes = _clienteApp.GetAll();
+            var produtos = _produtoApp.GetAll();
+
+            ViewData["Clientes"] = clientes.Select(Mapper.Map<Cliente, ClienteViewModel>);
+            ViewData["Produtos"] = produtos.Select(Mapper.Map<Produto, ProdutoViewModel>);
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(PedidoViewModel pedido)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    var pedidoDomain = Mapper.Map<PedidoViewModel, Pedido>(pedido);
 
-                return RedirectToAction("Index");
+                    _pedidoApp.Add(pedidoDomain);
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(pedido);
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }

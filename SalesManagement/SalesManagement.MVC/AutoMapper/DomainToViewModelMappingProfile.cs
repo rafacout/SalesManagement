@@ -19,6 +19,8 @@ namespace SalesManagement.MVC.AutoMapper
         {
             Mapper.CreateMap<ClienteViewModel, Cliente>();
             Mapper.CreateMap<ProdutoViewModel, Produto>();
+            Mapper.CreateMap<PedidoViewModel, Pedido>();
+            Mapper.CreateMap<ItemPedidoViewModel, ItemPedido>();
         }
     }
 }

@@ -2,6 +2,7 @@
 using SalesManagement.Application.Interfaces;
 using SalesManagement.Domain.Entities;
 using SalesManagement.MVC.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -53,7 +54,7 @@ namespace SalesManagement.MVC.Controllers
 
                 return View(cliente);
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }

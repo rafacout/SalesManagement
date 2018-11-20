@@ -46,15 +46,22 @@ namespace SalesManagement.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProdutoViewModel produto)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var produtoDomain = Mapper.Map<ProdutoViewModel, Produto>(produto);
-                _produtoApp.Add(produtoDomain);
+                if (ModelState.IsValid)
+                {
+                    var produtoDomain = Mapper.Map<ProdutoViewModel, Produto>(produto);
+                    _produtoApp.Add(produtoDomain);
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+
+                return View(produto);
             }
-
-            return View(produto);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ActionResult Edit(int id)
