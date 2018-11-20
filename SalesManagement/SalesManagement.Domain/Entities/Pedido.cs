@@ -9,7 +9,7 @@ namespace SalesManagement.Domain.Entities
 
         public DateTime DataPedido { get; set; }
 
-        public int ClienteId { get; set; }
+        public long ClienteId { get; set; }
 
         public virtual Cliente Cliente { get; set; }
 
