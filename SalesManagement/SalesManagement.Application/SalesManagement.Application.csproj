@@ -43,8 +43,10 @@
     <Compile Include="AppServiceBase.cs" />
     <Compile Include="ClienteAppService.cs" />
     <Compile Include="Interfaces\IAppServiceBase.cs" />
+    <Compile Include="Interfaces\IPedidoAppService.cs" />
     <Compile Include="Interfaces\IClienteAppService.cs" />
     <Compile Include="Interfaces\IProdutoAppService.cs" />
+    <Compile Include="PedidoAppService.cs" />
     <Compile Include="ProdutoAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
