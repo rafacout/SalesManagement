@@ -54,6 +54,8 @@ namespace SalesManagement.MVC.Controllers
                 {
                     var pedidoDomain = Mapper.Map<PedidoViewModel, Pedido>(pedido);
 
+                    pedidoDomain.ItensPedido.Add(new ItemPedido() { ProdutoId = 1, Quantidade = 1, ValorDesconto = 0  });
+
                     _pedidoApp.Add(pedidoDomain);
 
                     return RedirectToAction("Index");

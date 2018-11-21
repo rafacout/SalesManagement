@@ -23,9 +23,18 @@ namespace SalesManagement.MVC
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-select").Include(
+                      "~/Scripts/bootstrap-select.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-select-defaults").Include(
+                      "~/Scripts/i18n/defaults-pt_BR.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/bootstrap-select").Include(
+                      "~/Content/bootstrap-select.min.css"));
         }
     }
 }

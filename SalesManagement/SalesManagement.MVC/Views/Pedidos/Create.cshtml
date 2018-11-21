@@ -7,12 +7,19 @@
     IEnumerable<ProdutoViewModel> _produtoList = (IEnumerable<ProdutoViewModel>)ViewData["Produtos"];
 }
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" />
+
+
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Pedido de Vendas</h4>
         <hr />
@@ -20,10 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ClienteId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.DropDownList("ddCliente", new SelectList(_clienteList, "ClienteId", "Nome"))
-
-                @Html.EditorFor(model => model.ClienteId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+                @Html.DropDownList("ddCliente", new SelectList(_clienteList, "ClienteId", "Nome"), new { @class = "selectpicker" })
             </div>
         </div>
 
@@ -36,16 +40,27 @@
             </div>
         </div>
 
-        Itens do Pedido
+        <hr />
+        <h3>Itens do Pedido</h3>
 
         <div class="form-group">
-            @Html.DropDownList("ddProduto", new SelectList(_produtoList, "ProdutoId", "Descricao"))
+            <div class="col-lg-6">
+                @Html.DropDownList("ddProduto", new SelectList(_produtoList, "ProdutoId", "Descricao"), new { @class = "selectpicker" })
+            </div>
+            <div class="col-lg-6">
+                <button id="#btnAdicionarProduto" type="button" onclick="adicionarProduto()" class="btn btn-success">Adicionar Produto</button>
+            </div>
         </div>
+
+
+
+        <table id="tableProdutos" class="table table-striped table-bordered" style="width:100%"></table>
+
 
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Incluir Pedido" class="btn btn-info" />
             </div>
         </div>
     </div>
@@ -54,3 +69,45 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+
+
+
+@section Scripts {
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    @*<script src="~/Scripts/dataTables.bootstrap.js"></script>*@
+
+    <script>
+        var itensPedido = [
+            ["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
+            ["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],
+            ["Ashton Cox", "Junior Technical Author", "San Francisco", "1562", "2009/01/12", "$86,000"]
+        ];
+
+        function adicionarProduto() {
+            var table = $("#tableProdutos").DataTable();
+
+           table.row.add(["Tiger2 Nixon", "System 2Architect", "Edinburg2h", "5421", "2011/04/25", "$320,800"]).draw(false);
+
+        }
+
+        $(document).ready(function () {
+            
+
+            $('#tableProdutos').DataTable({
+                data: itensPedido,
+                columns: [
+                    { title: "Codigo" },
+                    { title: "Descricao" },
+                    { title: "Quantidade" },
+                    { title: "Preço" },
+                    { title: "Desconto" },
+                    { title: "Total" }
+                ]
+            });
+        });
+
+        
+    </script>
+}   
