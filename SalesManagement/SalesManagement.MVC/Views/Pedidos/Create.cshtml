@@ -11,59 +11,72 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" />
 
-
-<h2>Create</h2>
-
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Pedido de Vendas</h4>
-        <hr />
+    <h4>Pedido de Vendas</h4>
+    <hr />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClienteId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.DropDownList("ddCliente", new SelectList(_clienteList, "ClienteId", "Nome"), new { @class = "selectpicker" })
-            </div>
+    <div class="row">
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.ClienteId, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ddCliente", new SelectList(_clienteList, "ClienteId", "Nome"), new { @class = "selectpicker" })
         </div>
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataPedido, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.DataPedido, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DataPedido, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <hr />
-        <h3>Itens do Pedido</h3>
-
-        <div class="form-group">
-            <div class="col-lg-6">
-                @Html.DropDownList("ddProduto", new SelectList(_produtoList, "ProdutoId", "Descricao"), new { @class = "selectpicker" })
-            </div>
-            <div class="col-lg-6">
-                <button id="#btnAdicionarProduto" type="button" onclick="adicionarProduto()" class="btn btn-success">Adicionar Produto</button>
-            </div>
-        </div>
-
-
-
-        <table id="tableProdutos" class="table table-striped table-bordered" style="width:100%"></table>
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Incluir Pedido" class="btn btn-info" />
-            </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.DataPedido, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.DataPedido, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DataPedido, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <hr />
+
+    <div class="row">
+
+        <div class="form-group col-md-3">
+            <label>Produto</label>
+            @Html.DropDownList("ddProduto", new SelectList(_produtoList, "ProdutoId", "Descricao"), new { @class = "selectpicker" })
+        </div>
+
+        <div class="form-group col-md-2">
+            <label>Quantidade</label>
+            <input type="number" id="txtQuantidade" value="" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-2">
+            <label>Preço Unitário</label>
+            <input type="number" id="txtPrecoUnitario" value="" readonly disabled class="form-control" />
+        </div>
+
+        <div class="form-group col-md-2">
+            <label>Valor Desconto</label>
+            <input type="text" id="txtDesconto" value="0" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-2">
+            <label>Valor Total</label>
+            <input type="number" id="txtValorTotal" value="" readonly disabled class="form-control" />
+        </div>
+
+        <div class="form-group col-md-2">
+            <button id="#btnAdicionarProduto" type="button" onclick="atualizarProduto()" class="btn btn-success">Adicionar Produto</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <table id="tableProdutos" class="table table-striped table-bordered" style="width:100%"></table>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Gravar Pedido" class="btn btn-info" />
+        </div>
+    </div>
+
 }
 
 <div>
@@ -71,43 +84,117 @@
 </div>
 
 
-
-
-
 @section Scripts {
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
-    @*<script src="~/Scripts/dataTables.bootstrap.js"></script>*@
 
     <script>
-        var itensPedido = [
-            ["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
-            ["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],
-            ["Ashton Cox", "Junior Technical Author", "San Francisco", "1562", "2009/01/12", "$86,000"]
-        ];
+        var table = undefined;
+        var itensPedido = @Html.Raw(Json.Encode(Model.ItensPedido));
 
-        function adicionarProduto() {
-            var table = $("#tableProdutos").DataTable();
+        function atualizarProduto() {
+            var codigoProduto = $("#ddProduto").selectpicker('val');;
+            var descricaoProduto = "";
+            var quantidade = $("#txtQuantidade").val();
+            var precoUnitario = $("#txtPrecoUnitario").val();
+            var valorDesconto = $("#txtDesconto").val();
+            var valorTotal = $("#txtValorTotal").val();
 
-           table.row.add(["Tiger2 Nixon", "System 2Architect", "Edinburg2h", "5421", "2011/04/25", "$320,800"]).draw(false);
+            if (codigoProduto == undefined)
+            {
+                alert('Selecione um produto');
+                return false;
+            }
 
+            if (quantidade == undefined || quantidade <= 0)
+            {
+                alert('Informe uma quantidade');
+                return false;
+            }
+
+            if (codigoProduto == undefined)
+            {
+                alert('Selecione um produto');
+                return false;
+            }
+
+            if (table != undefined) {
+                var exists = false;
+
+                table.rows().data().each(function(val, i) {
+                    console.log(val);
+                    if (val[0] == codigoProduto)
+                    {
+                        exists = true;
+                    }
+                });
+
+                if (!exists) {
+                    table.row.add([codigoProduto, descricaoProduto, quantidade, precoUnitario, valorDesconto, valorTotal, ""]).draw(false);
+                } else {
+                    //update
+                    //table.row.add([codigoProduto, descricaoProduto, quantidade, precoUnitario, valorDesconto, valorTotal, ""]).draw(false);
+                }
+
+
+            }
+        }
+
+        function selecionarItem() {
+            var item = table.rows('.selected').data();
+
+            if (item != undefined) {
+                $("#ddProduto").selectpicker('val', item[0][0]);
+                $("#txtQuantidade").val(item[0][2]);
+                $("#txtPrecoUnitario").val(item[0][3]);
+                $("#txtDesconto").val(item[0][4]);
+                $("#txtValorTotal").val(item[0][5]);
+            }
+        }
+
+        function onChangeItem() {
+            var quantidade = $("#txtQuantidade").val();
+            var precoUnitario = $("#txtPrecoUnitario").val();
+            var valorDesconto = $("#txtDesconto").val();
+            var valorTotal = (quantidade * precoUnitario) - valorDesconto;
+
+            $("#txtValorTotal").val(valorTotal);
+        }
+
+        function salvarPedido() {
+            if (table != undefined) {
+                var data = table.rows().data();
+            }
         }
 
         $(document).ready(function () {
-            
 
-            $('#tableProdutos').DataTable({
+            table = $('#tableProdutos').DataTable({
                 data: itensPedido,
                 columns: [
-                    { title: "Codigo" },
-                    { title: "Descricao" },
+                    { title: "Produto" },
+                    { title: "Descrição" },
                     { title: "Quantidade" },
                     { title: "Preço" },
                     { title: "Desconto" },
-                    { title: "Total" }
+                    { title: "Total" },
+                    { title: "Ação" }
                 ]
             });
+
+            $('#tableProdutos tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('selected') ) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    selecionarItem();
+                }
+            });
+
+
         });
 
-        
+
     </script>
 }   

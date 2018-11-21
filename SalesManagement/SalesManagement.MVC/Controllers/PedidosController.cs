@@ -41,7 +41,7 @@ namespace SalesManagement.MVC.Controllers
             ViewData["Clientes"] = clientes.Select(Mapper.Map<Cliente, ClienteViewModel>);
             ViewData["Produtos"] = produtos.Select(Mapper.Map<Produto, ProdutoViewModel>);
 
-            return View();
+            return View(new PedidoViewModel());
         }
 
         [HttpPost]
