@@ -40,6 +40,7 @@
         <div class="form-group col-md-3">
             <label>Produto</label>
             @Html.DropDownList("ddProduto", new SelectList(_produtoList, "ProdutoId", "Descricao"), new { @class = "selectpicker" })
+            <input type="hidden" id="txtDescricaoProduto" value="" />
         </div>
 
         <div class="form-group col-md-2">
@@ -92,11 +93,12 @@
     <script>
         var table = undefined;
         var itensPedido = @Html.Raw(Json.Encode(Model.ItensPedido));
+        var dadosProdutos = @Html.Raw(Json.Encode(_produtoList));
         var urlPostSave = '@Url.Action("Create", "Pedidos")';
 
         function atualizarProduto() {
-            var codigoProduto = $("#ddProduto").selectpicker('val');;
-            var descricaoProduto = "";
+            var codigoProduto = $("#ddProduto").selectpicker('val');
+            var descricaoProduto = $("#txtDescricaoProduto").val();
             var quantidade = $("#txtQuantidade").val();
             var precoUnitario = $("#txtPrecoUnitario").val();
             var valorDesconto = $("#txtDesconto").val();
@@ -142,6 +144,20 @@
             }
         }
 
+        function getDadosProduto(produtoId) {
+            var produto = undefined;
+            
+            $(dadosProdutos).each(function(i, val) {
+                if (val.ProdutoId == produtoId)
+                {
+                    produto = val;
+                }
+            });
+
+            return produto;
+        }
+
+
         function selecionarItem() {
             var item = table.rows('.selected').data();
 
@@ -155,6 +171,16 @@
         }
 
         function onChangeItem() {
+            var produto = getDadosProduto($("#ddProduto").selectpicker('val'));
+        
+            $("#txtPrecoUnitario").val(produto.Valor);
+            $("#txtDescricaoProduto").val(produto.Descricao);
+
+            if($("#txtQuantidade").val() == "")
+            {
+                $("#txtQuantidade").val(1);
+            }
+
             var quantidade = $("#txtQuantidade").val();
             var precoUnitario = $("#txtPrecoUnitario").val();
             var valorDesconto = $("#txtDesconto").val();
@@ -199,6 +225,7 @@
                     data: pedidoModel,
                     success: function(x) {
                         alert('Pedido criado com sucesso!');
+                        
                     },
                     fail : function(error) {
                         alert('Ocorreu um erro: ' + error);
@@ -223,7 +250,7 @@
                 ]
             });
 
-            $('#tableProdutos tbody').on( 'click', 'tr', function () {
+            $('#tableProdutos tbody').on('click', 'tr', function () {
                 if ( $(this).hasClass('selected') ) {
                     $(this).removeClass('selected');
                 }
@@ -234,7 +261,9 @@
                 }
             });
 
-
+            $('#txtQuantidade').on('change', onChangeItem);
+            $('#txtDesconto').on('change', onChangeItem);
+            $('#ddProduto').on('change', onChangeItem);
         });
 
 
