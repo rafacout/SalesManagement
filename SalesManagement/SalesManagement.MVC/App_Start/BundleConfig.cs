@@ -26,6 +26,9 @@ namespace SalesManagement.MVC
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-select").Include(
                       "~/Scripts/bootstrap-select.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootbox").Include(
+                      "~/Scripts/bootbox.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-select-defaults").Include(
                       "~/Scripts/i18n/defaults-pt_BR.min.js"));
 

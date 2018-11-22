@@ -94,7 +94,9 @@
         var table = undefined;
         var itensPedido = @Html.Raw(Json.Encode(Model.ItensPedido));
         var dadosProdutos = @Html.Raw(Json.Encode(_produtoList));
+
         var urlPostSave = '@Url.Action("Create", "Pedidos")';
+        var urlIndex = '@Url.Action("Index", "Pedidos")';
 
         function atualizarProduto() {
             var codigoProduto = $("#ddProduto").selectpicker('val');
@@ -146,7 +148,7 @@
 
         function getDadosProduto(produtoId) {
             var produto = undefined;
-            
+
             $(dadosProdutos).each(function(i, val) {
                 if (val.ProdutoId == produtoId)
                 {
@@ -172,7 +174,7 @@
 
         function onChangeItem() {
             var produto = getDadosProduto($("#ddProduto").selectpicker('val'));
-        
+
             $("#txtPrecoUnitario").val(produto.Valor);
             $("#txtDescricaoProduto").val(produto.Descricao);
 
@@ -217,18 +219,17 @@
                 //    }
                 //});
 
-                debugger;
-
                 $.ajax({
                     type: "POST",
                     url: urlPostSave,
                     data: pedidoModel,
                     success: function(x) {
-                        alert('Pedido criado com sucesso!');
-                        
+                        bootbox.alert('Pedido criado com sucesso!', function() { 
+                            window.location.replace(urlIndex);
+                        });
                     },
                     fail : function(error) {
-                        alert('Ocorreu um erro: ' + error);
+                        bootbox.alert('Ocorreu um erro: ' + error);
                     }
                 });
 
