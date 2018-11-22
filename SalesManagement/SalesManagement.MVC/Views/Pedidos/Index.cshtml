@@ -1,14 +1,45 @@
-﻿
+﻿@model IEnumerable<SalesManagement.MVC.ViewModels.PedidoViewModel>
+
 @{
-    ViewBag.Title = "Pedidos";
+    ViewBag.Title = "Index";
 }
 
-<h2>Pedidos</h2>
+<h2>Index</h2>
 
-<br />
-<br />
+<p>
+    @Html.ActionLink("Criar Novo Pedido", "Create", "Pedidos", new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPedido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClienteId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValorTotal)
+        </th>
+        <th></th>
+    </tr>
 
-<div class="form-group">
-    @Html.ActionLink("Criar Novo Pedido", "Create", "Pedidos", new { @class = "btn btn-primary btn-large" })
-</div>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataPedido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClienteId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValorTotal)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PedidoId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PedidoId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PedidoId })
+        </td>
+    </tr>
+}
 
+</table>

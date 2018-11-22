@@ -25,7 +25,11 @@ namespace SalesManagement.MVC.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var pedidosModel = _pedidoApp.GetAll();
+
+            var pedidosViewModel = pedidosModel.Select(Mapper.Map<Pedido, PedidoViewModel>);
+
+            return View(pedidosViewModel);
         }
 
         public ActionResult Details(int id)
