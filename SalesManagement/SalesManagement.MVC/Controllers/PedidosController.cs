@@ -41,11 +41,14 @@ namespace SalesManagement.MVC.Controllers
             ViewData["Clientes"] = clientes.Select(Mapper.Map<Cliente, ClienteViewModel>);
             ViewData["Produtos"] = produtos.Select(Mapper.Map<Produto, ProdutoViewModel>);
 
-            return View(new PedidoViewModel());
+            var pedido = new PedidoViewModel();
+            pedido.PedidoId = 0;
+            pedido.DataPedido = DateTime.Now;
+
+            return View(pedido);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(PedidoViewModel pedido)
         {
             try

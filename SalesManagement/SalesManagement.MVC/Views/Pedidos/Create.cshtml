@@ -18,6 +18,8 @@
     <h4>Pedido de Vendas</h4>
     <hr />
 
+    <input type="hidden" id="txtPedidoId" value="@Model.PedidoId" />
+
     <div class="row">
         <div class="form-group col-md-3">
             @Html.LabelFor(model => model.ClienteId, htmlAttributes: new { @class = "control-label" })
@@ -26,7 +28,7 @@
 
         <div class="form-group col-md-3">
             @Html.LabelFor(model => model.DataPedido, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.DataPedido, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.DataPedido, new { htmlAttributes = new { @class = "form-control", @id = "txtDataPedido" } })
             @Html.ValidationMessageFor(model => model.DataPedido, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -56,7 +58,7 @@
         </div>
 
         <div class="form-group col-md-2">
-            <label>Valor Total</label>
+            <label>Valor Total Item</label>
             <input type="number" id="txtValorTotal" value="" readonly disabled class="form-control" />
         </div>
 
@@ -73,7 +75,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Gravar Pedido" class="btn btn-info" />
+            <input type="button" value="Gravar Pedido" onclick="salvarPedido()" class="btn btn-info" />
         </div>
     </div>
 
@@ -90,6 +92,7 @@
     <script>
         var table = undefined;
         var itensPedido = @Html.Raw(Json.Encode(Model.ItensPedido));
+        var urlPostSave = '@Url.Action("Create", "Pedidos")';
 
         function atualizarProduto() {
             var codigoProduto = $("#ddProduto").selectpicker('val');;
@@ -163,6 +166,45 @@
         function salvarPedido() {
             if (table != undefined) {
                 var data = table.rows().data();
+
+                var pedidoModel = {
+                    PedidoId : $("#txtPedidoId").val(),
+                    DataPedido: $("#txtDataPedido").val(),
+                    ClienteId: $("#ddCliente").val(),
+                    ValorTotal: 0,
+                    ItensPedido: [],
+                };
+
+                var itemPedido = {
+                    ItemPedidoId: 0,
+                    PedidoId: 0,
+                    ProdutoId: 0,
+                    Quantidade: 0,
+                    PrecoUnitario: 0,
+                    ValorDesconto: 0
+                };
+
+                //table.rows().data().each(function(val, i) {
+                //    if (val[0] == codigoProduto)
+                //    {
+                //        exists = true;
+                //    }
+                //});
+
+                debugger;
+
+                $.ajax({
+                    type: "POST",
+                    url: urlPostSave,
+                    data: pedidoModel,
+                    success: function(x) {
+                        alert('Pedido criado com sucesso!');
+                    },
+                    fail : function(error) {
+                        alert('Ocorreu um erro: ' + error);
+                    }
+                });
+
             }
         }
 
